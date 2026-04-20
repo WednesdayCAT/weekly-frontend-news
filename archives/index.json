@@ -1,0 +1,14 @@
+{
+  "updatedAt": "2026-04-20T17:16:45.787Z",
+  "totalWeeks": 1,
+  "weeks": [
+    {
+      "year": 2026,
+      "weekNum": 16,
+      "title": "2026年第16周",
+      "updatedAt": "2026-04-20",
+      "path": "2026\\week-16.md",
+      "url": "https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\\week-16.md"
+    }
+  ]
+}

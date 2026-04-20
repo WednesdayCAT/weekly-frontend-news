@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>前端技术周刊</title>
+        <link>https://github.com/WednesdayCAT/weekly-frontend-news</link>
+        <description>每周一自动更新的前端技术周刊，帮你高效掌握前端趋势</description>
+        <lastBuildDate>Mon, 20 Apr 2026 17:16:45 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>weekly-frontend-news</generator>
+        <language>zh-CN</language>
+        <copyright>MIT © WednesdayCAT</copyright>
+        <atom:link href="https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[2026年第16周]]></title>
+            <link>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\week-16.md</link>
+            <guid>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\week-16.md</guid>
+            <pubDate>Mon, 20 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[第16周前端技术周刊]]></description>
+            <content:encoded><![CDATA[# 📅 2026-16周 前端技术周刊（04-12 至 04-18）
+
+更新时间：2026-04-20 | 开源地址：[weekly-frontend-news](https://github.com/WednesdayCAT/weekly-frontend-news)
+
+> 每周一自动更新，精选前端领域「框架更新/生态工具/开源项目/行业实践」，帮你高效掌握前端趋势。
+
+---
+
+## 🚀 框架更新
+
+-  **Vue.js 3.x**：混入 mixins 与过滤器 filter 在 Vue2/Vue3 中的差异详解
+  > Vue2 多使用 mixins 进行代码复用，Vue3 已移除 filter 过滤器，推荐使用组合式 API 替代。
+  > 来源：[掘金](https://juejin.cn/frontend)
+-  **Next.js App Router**：SSR/CSR、路由模型、缓存策略与 Server Action 基础速查
+  > 系统梳理 Next.js 核心概念，包含最小示例快速上手，适合 React 开发者从 0 到 1 掌握服务端渲染实践。
+  > 来源：[掘金](https://juejin.cn/frontend)
+
+---
+
+## 🛠️ 生态工具
+
+-  **JavaScript 颜色处理库**：零依赖、链式调用、可变对象，重新设计颜色处理体验
+  > 解决现有方案 API 反直觉、体积臃肿问题，提供轻量级颜色处理方案。
+  > 来源：[掘金](https://juejin.cn/frontend)
+
+---
+
+## 🌟 热门开源项目
+
+-  **WebSkill** ⭐ 173+：运行在浏览器的 Agent 技能，OpenTiny 社区开源
+  > 本文将基于这一架构，深入探讨 WebSkill 扮演的核心角色、独特价值、企业级应用场景。
+  > 来源：[掘金](https://juejin.cn/post/7630681198802501695)
+
+---
+
+## 🌐 Web 标准与跨端方案
+
+-  **W3C Window Splitter Pattern**：基于规范的无障碍面板分割器，键盘友好交互设计
+  > 教你用方向键和 Enter 键打造无障碍面板分割器，让键盘用户也能自由调整布局。
+  > 来源：[掘金](https://juejin.cn/post/7630450023369850907)
+
+---
+
+## 💡 行业实践与深度文章
+
+-  **首屏性能优化**：6 个实战技巧让页面&quot;秒开&quot;，从网络请求到渲染全流程优化
+  > 用户打开网站 3 秒白屏就会离开，本文从网络请求、资源加载、渲染优化等 6 个维度提供可落地的提速方案。
+  > 来源：[掘金](https://juejin.cn/post/7630689270854926345)
+
+---
+
+## 📊 本期统计
+
+| 模块 | 数量 |
+|------|------|
+| 框架更新 | 2 |
+| 生态工具 | 1 |
+| 开源项目 | 1 |
+| Web 标准 | 1 |
+| 行业实践 | 1 |
+
+---
+
+## 📢 关于本项目
+
+- 本仓库每周一 8:00 自动更新，持续沉淀前端前沿资讯；
+- 如果你觉得内容有帮助，欢迎给个 ⭐ Star 支持；
+- 欢迎提交 Issue/PR 补充优质内容，共建前端社区。
+
+> 技术沉淀，开源共享 — WednesdayCAT
+
+---
+
+📬 **订阅方式**：[RSS](../rss.xml) | [JSON Feed](../feed.json) | [Atom](../atom.xml)
+
+📚 **历史存档**：[周刊索引](./README.md)
+]]></content:encoded>
+        </item>
+    </channel>
+</rss>

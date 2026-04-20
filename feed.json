@@ -1,0 +1,24 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "前端技术周刊",
+    "home_page_url": "https://github.com/WednesdayCAT/weekly-frontend-news",
+    "feed_url": "https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/feed.json",
+    "description": "每周一自动更新的前端技术周刊，帮你高效掌握前端趋势",
+    "author": {
+        "name": "WednesdayCAT",
+        "url": "https://github.com/WednesdayCAT"
+    },
+    "items": [
+        {
+            "id": "https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\\week-16.md",
+            "content_html": "# 📅 2026-16周 前端技术周刊（04-12 至 04-18）\r\n\r\n更新时间：2026-04-20 | 开源地址：[weekly-frontend-news](https://github.com/WednesdayCAT/weekly-frontend-news)\r\n\r\n> 每周一自动更新，精选前端领域「框架更新/生态工具/开源项目/行业实践」，帮你高效掌握前端趋势。\r\n\r\n---\r\n\r\n## 🚀 框架更新\r\n\r\n-  **Vue.js 3.x**：混入 mixins 与过滤器 filter 在 Vue2/Vue3 中的差异详解\r\n  > Vue2 多使用 mixins 进行代码复用，Vue3 已移除 filter 过滤器，推荐使用组合式 API 替代。\r\n  > 来源：[掘金](https://juejin.cn/frontend)\r\n-  **Next.js App Router**：SSR/CSR、路由模型、缓存策略与 Server Action 基础速查\r\n  > 系统梳理 Next.js 核心概念，包含最小示例快速上手，适合 React 开发者从 0 到 1 掌握服务端渲染实践。\r\n  > 来源：[掘金](https://juejin.cn/frontend)\r\n\r\n---\r\n\r\n## 🛠️ 生态工具\r\n\r\n-  **JavaScript 颜色处理库**：零依赖、链式调用、可变对象，重新设计颜色处理体验\r\n  > 解决现有方案 API 反直觉、体积臃肿问题，提供轻量级颜色处理方案。\r\n  > 来源：[掘金](https://juejin.cn/frontend)\r\n\r\n---\r\n\r\n## 🌟 热门开源项目\r\n\r\n-  **WebSkill** ⭐ 173+：运行在浏览器的 Agent 技能，OpenTiny 社区开源\r\n  > 本文将基于这一架构，深入探讨 WebSkill 扮演的核心角色、独特价值、企业级应用场景。\r\n  > 来源：[掘金](https://juejin.cn/post/7630681198802501695)\r\n\r\n---\r\n\r\n## 🌐 Web 标准与跨端方案\r\n\r\n-  **W3C Window Splitter Pattern**：基于规范的无障碍面板分割器，键盘友好交互设计\r\n  > 教你用方向键和 Enter 键打造无障碍面板分割器，让键盘用户也能自由调整布局。\r\n  > 来源：[掘金](https://juejin.cn/post/7630450023369850907)\r\n\r\n---\r\n\r\n## 💡 行业实践与深度文章\r\n\r\n-  **首屏性能优化**：6 个实战技巧让页面&quot;秒开&quot;，从网络请求到渲染全流程优化\r\n  > 用户打开网站 3 秒白屏就会离开，本文从网络请求、资源加载、渲染优化等 6 个维度提供可落地的提速方案。\r\n  > 来源：[掘金](https://juejin.cn/post/7630689270854926345)\r\n\r\n---\r\n\r\n## 📊 本期统计\r\n\r\n| 模块 | 数量 |\r\n|------|------|\r\n| 框架更新 | 2 |\r\n| 生态工具 | 1 |\r\n| 开源项目 | 1 |\r\n| Web 标准 | 1 |\r\n| 行业实践 | 1 |\r\n\r\n---\r\n\r\n## 📢 关于本项目\r\n\r\n- 本仓库每周一 8:00 自动更新，持续沉淀前端前沿资讯；\r\n- 如果你觉得内容有帮助，欢迎给个 ⭐ Star 支持；\r\n- 欢迎提交 Issue/PR 补充优质内容，共建前端社区。\r\n\r\n> 技术沉淀，开源共享 — WednesdayCAT\r\n\r\n---\r\n\r\n📬 **订阅方式**：[RSS](../rss.xml) | [JSON Feed](../feed.json) | [Atom](../atom.xml)\r\n\r\n📚 **历史存档**：[周刊索引](./README.md)\r\n",
+            "url": "https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\\week-16.md",
+            "title": "2026年第16周",
+            "summary": "第16周前端技术周刊",
+            "date_modified": "2026-04-20T00:00:00.000Z",
+            "author": {
+                "name": "WednesdayCAT"
+            }
+        }
+    ]
+}
