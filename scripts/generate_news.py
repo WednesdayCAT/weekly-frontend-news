@@ -3,6 +3,8 @@ import re
 import requests
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
+import warnings
+warnings.filterwarnings("ignore", category=requests.packages.urllib3.exceptions.InsecureRequestWarning)
 
 # ================= 配置 =================
 today = datetime.now()
@@ -35,17 +37,22 @@ def parse_vue_blog(soup):
     items = soup.select(".news-item")[:3]
     news = []
     for item in items:
-        t = item.get_text(strip=True)
-        if len(t) < 8: continue
-        link = item.find("a")
-        if not link: continue
-        href = link.get("href", "")
+        title_elem = item.select_one("h3")
+        if not title_elem:
+            continue
+        title = title_elem.get_text(strip=True)
+        link_elem = item.select_one("a")
+        if not link_elem:
+            continue
+        href = link_elem.get("href", "")
         if not href.startswith("http"):
             href = "https://blog.vuejs.org" + href
+        desc_elem = item.select_one(".news-desc")
+        desc = desc_elem.get_text(strip=True)[:150] + "..." if desc_elem else "无简介"
         news.append({
-            "title": t,
+            "title": title,
             "link": href,
-            "desc": "来自 Vue 官方博客"
+            "desc": desc
         })
     return news
 
@@ -53,14 +60,22 @@ def parse_react_blog(soup):
     items = soup.select(".css-1dbjc4n.r-1w6e6rj.r-13qz1uu")[:3]
     news = []
     for item in items:
-        title = item.find("h2")
-        if not title: continue
-        link = item.find("a")
-        if not link: continue
+        title_elem = item.select_one("h2")
+        if not title_elem:
+            continue
+        title = title_elem.get_text(strip=True)
+        link_elem = item.select_one("a")
+        if not link_elem:
+            continue
+        href = link_elem.get("href", "")
+        if not href.startswith("http"):
+            href = "https://react.dev" + href
+        desc_elem = item.select_one("p")
+        desc = desc_elem.get_text(strip=True)[:150] + "..." if desc_elem else "无简介"
         news.append({
-            "title": title.get_text(strip=True),
-            "link": "https://react.dev" + link.get("href"),
-            "desc": "来自 React 官方博客"
+            "title": title,
+            "link": href,
+            "desc": desc
         })
     return news
 
@@ -68,14 +83,22 @@ def parse_vite_blog(soup):
     items = soup.select(".blog-post-card")[:3]
     news = []
     for item in items:
-        title = item.find("h3")
-        if not title: continue
-        link = item.find("a")
-        if not link: continue
+        title_elem = item.select_one("h3")
+        if not title_elem:
+            continue
+        title = title_elem.get_text(strip=True)
+        link_elem = item.select_one("a")
+        if not link_elem:
+            continue
+        href = link_elem.get("href", "")
+        if not href.startswith("http"):
+            href = "https://vitejs.dev" + href
+        desc_elem = item.select_one("p")
+        desc = desc_elem.get_text(strip=True)[:150] + "..." if desc_elem else "无简介"
         news.append({
-            "title": title.get_text(strip=True),
-            "link": "https://vitejs.dev" + link.get("href"),
-            "desc": "来自 Vite 官方博客"
+            "title": title,
+            "link": href,
+            "desc": desc
         })
     return news
 
@@ -83,18 +106,24 @@ def parse_github_trending(soup):
     items = soup.select(".Box-row")[:5]
     news = []
     for item in items:
-        title = item.find("h3")
-        if not title: continue
-        link = title.find("a")
-        if not link: continue
-        stars = item.select_one(".octicon-star + span")
-        star_text = stars.get_text(strip=True) if stars else "0"
-        desc = item.find("p")
-        desc_text = desc.get_text(strip=True)[:120] + "..." if desc else "无描述"
+        title_elem = item.select_one("h3")
+        if not title_elem:
+            continue
+        title = title_elem.get_text(strip=True).replace("\n", "").replace(" ", "")
+        link_elem = title_elem.select_one("a")
+        if not link_elem:
+            continue
+        href = link_elem.get("href", "")
+        if not href.startswith("http"):
+            href = "https://github.com" + href
+        star_elem = item.select_one(".octicon-star + span")
+        star_text = star_elem.get_text(strip=True) if star_elem else "0"
+        desc_elem = item.select_one("p")
+        desc = desc_elem.get_text(strip=True)[:120] + "..." if desc_elem else "无描述"
         news.append({
-            "title": f"{title.get_text(strip=True)} ⭐{star_text}",
-            "link": "https://github.com" + link.get("href"),
-            "desc": desc_text
+            "title": f"{title} ⭐{star_text}",
+            "link": href,
+            "desc": desc
         })
     return news
 
@@ -102,15 +131,21 @@ def parse_juejin_collect(soup):
     items = soup.select(".article-item")[:4]
     news = []
     for item in items:
-        title = item.find("h3")
-        if not title: continue
-        link = item.find("a")
-        if not link: continue
-        abstract = item.find(class_="abstract")
-        desc = abstract.get_text(strip=True)[:120] if abstract else "无摘要"
+        title_elem = item.select_one("h3")
+        if not title_elem:
+            continue
+        title = title_elem.get_text(strip=True)
+        link_elem = item.select_one("a")
+        if not link_elem:
+            continue
+        href = link_elem.get("href", "")
+        if not href.startswith("http"):
+            href = "https://juejin.cn" + href
+        desc_elem = item.select_one(".abstract")
+        desc = desc_elem.get_text(strip=True)[:120] + "..." if desc_elem else "无摘要"
         news.append({
-            "title": title.get_text(strip=True),
-            "link": "https://juejin.cn" + link.get("href"),
+            "title": title,
+            "link": href,
             "desc": desc
         })
     return news
@@ -124,35 +159,35 @@ def generate_md():
         "行业实践与深度文章": []
     }
 
-    # 1. Vue 官方博客 ----
+    # 1. Vue 官方博客
     s = get_soup("https://blog.vuejs.org/")
     if s:
         data["框架更新"].extend(parse_vue_blog(s))
 
-    # 2. React 官方博客 ----
+    # 2. React 官方博客
     s = get_soup("https://react.dev/blog")
     if s:
-        data["框架更新"].extend(parse_react_news(s))
+        data["框架更新"].extend(parse_react_blog(s))
 
-    # 3. Vite 官方博客 ----
+    # 3. Vite 官方博客
     s = get_soup("https://vitejs.dev/blog")
     if s:
-        data["生态工具"].extend(parse_vite_news(s))
+        data["生态工具"].extend(parse_vite_blog(s))
 
-    # 4. GitHub Trending ----
+    # 4. GitHub Trending
     s = get_soup("https://github.com/trending/frontend?since=weekly")
     if s:
         data["热门开源项目"].extend(parse_github_trending(s))
 
-    # 5. 掘金前端精选 ----
+    # 5. 掘金前端精选
     s = get_soup("https://juejin.cn/column/6896228171065718797")
     if s:
         data["行业实践与深度文章"].extend(parse_juejin_collect(s))
 
-    # 过滤无内容情况
+    # 兜底：如果没有数据，填充默认内容
     for k in data:
         if not data[k]:
-            data[k] = [{"title": f"本周【{k}】暂无重大更新", "link": "#", "desc": "无"}]
+            data[k] = [{"title": "本周暂无重大更新", "link": "#", "desc": "无"}]
 
     # 生成 Markdown
     md = f"""# 📅 {week_num} 前端技术周刊 · {week_str}
