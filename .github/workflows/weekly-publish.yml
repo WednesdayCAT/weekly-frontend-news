@@ -1,0 +1,39 @@
+# 每周生成前端技术周刊
+name: Weekly Frontend News
+
+on:
+  schedule:
+    # 每周一 8:00 (UTC 时间 0:00)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # 支持手动触发
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Generate weekly news
+        run: npm run publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "chore: 自动更新前端周刊 $(date +%Y-%m-%d)" || echo "No changes to commit"
+          git push

@@ -1,0 +1,16 @@
+{
+  "name": "weekly-frontend-news",
+  "version": "1.0.0",
+  "description": "每周一自动更新的前端技术周刊",
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch-news.js",
+    "generate": "node scripts/generate-weekly.js",
+    "publish": "npm run fetch && npm run generate"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "cheerio": "^1.0.0-rc.12",
+    "handlebars": "^4.7.8"
+  }
+}
