@@ -4,7 +4,7 @@ import requests
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 
-# -------------------------- 配置信息 --------------------------
+# ================= 配置 =================
 today = datetime.now()
 last_monday = today - timedelta(days=today.weekday() + 7)
 last_sunday = last_monday + timedelta(days=6)
@@ -12,185 +12,191 @@ week_num = f"{today.year}-{today.isocalendar()[1]-1}周"
 week_str = f"{last_monday.strftime('%Y-%m-%d')} 至 {last_sunday.strftime('%Y-%m-%d')}"
 md_file_name = f"{week_num}（{last_monday.strftime('%m%d')}-{last_sunday.strftime('%m%d')}）.md"
 
-# 路径配置
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 docs_dir = os.path.join(base_dir, "docs", str(today.year))
 os.makedirs(docs_dir, exist_ok=True)
 md_file_path = os.path.join(docs_dir, md_file_name)
 
-# 资讯源配置（精选高价值、更新稳定的前端源）
-NEWS_SOURCES = {
-    "vue_official": {
-        "name": "Vue 官方博客",
-        "url": "https://vuejs.org/news",
-        "category": "框架更新",
-        "parser": "parse_vue_news"
-    },
-    "react_official": {
-        "name": "React 官方博客",
-        "url": "https://react.dev/blog",
-        "category": "框架更新",
-        "parser": "parse_react_news"
-    },
-    "vite_official": {
-        "name": "Vite 官方博客",
-        "url": "https://vitejs.dev/blog",
-        "category": "生态工具",
-        "parser": "parse_vite_news"
-    },
-    "github_trending": {
-        "name": "GitHub Trending Frontend",
-        "url": "https://github.com/trending/frontend?since=weekly",
-        "category": "开源项目",
-        "parser": "parse_github_trending"
-    },
-    "juejin_frontend": {
-        "name": "掘金前端热门",
-        "url": "https://juejin.cn/column/6896228171065718797",
-        "category": "行业实践",
-        "parser": "parse_juejin_news"
-    }
-}
-
-# -------------------------- 工具函数 --------------------------
-def get_soup(url):
+# ================= 通用请求工具 =================
+def get_soup(url, verify=False):
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     }
     try:
-        resp = requests.get(url, headers=headers, timeout=10)
+        resp = requests.get(url, headers=headers, timeout=15, verify=verify)
         resp.raise_for_status()
         return BeautifulSoup(resp.text, "html.parser")
     except Exception as e:
-        print(f"爬取 {url} 失败: {e}")
+        print(f"❌ 爬取失败：{url} -> {e}")
         return None
 
-def parse_vue_news(soup):
-    news_list = []
-    if not soup:
-        return news_list
+# ================= 各平台专用解析器 =================
+def parse_vue_blog(soup):
     items = soup.select(".news-item")[:3]
+    news = []
     for item in items:
-        title = item.select_one("h3").get_text(strip=True) if item.select_one("h3") else "无标题"
-        link = "https://vuejs.org" + item.select_one("a")["href"] if item.select_one("a") else "#"
-        desc = item.select_one(".news-desc").get_text(strip=True)[:150] + "..." if item.select_one(".news-desc") else "无简介"
-        news_list.append({"title": title, "link": link, "desc": desc})
-    return news_list
+        t = item.get_text(strip=True)
+        if len(t) < 8: continue
+        link = item.find("a")
+        if not link: continue
+        href = link.get("href", "")
+        if not href.startswith("http"):
+            href = "https://blog.vuejs.org" + href
+        news.append({
+            "title": t,
+            "link": href,
+            "desc": "来自 Vue 官方博客"
+        })
+    return news
 
-def parse_react_news(soup):
-    news_list = []
-    if not soup:
-        return news_list
+def parse_react_blog(soup):
     items = soup.select(".css-1dbjc4n.r-1w6e6rj.r-13qz1uu")[:3]
+    news = []
     for item in items:
-        title = item.select_one("h2").get_text(strip=True) if item.select_one("h2") else "无标题"
-        link = "https://react.dev" + item.select_one("a")["href"] if item.select_one("a") else "#"
-        desc = item.select_one("p").get_text(strip=True)[:150] + "..." if item.select_one("p") else "无简介"
-        news_list.append({"title": title, "link": link, "desc": desc})
-    return news_list
+        title = item.find("h2")
+        if not title: continue
+        link = item.find("a")
+        if not link: continue
+        news.append({
+            "title": title.get_text(strip=True),
+            "link": "https://react.dev" + link.get("href"),
+            "desc": "来自 React 官方博客"
+        })
+    return news
 
-def parse_vite_news(soup):
-    news_list = []
-    if not soup:
-        return news_list
+def parse_vite_blog(soup):
     items = soup.select(".blog-post-card")[:3]
+    news = []
     for item in items:
-        title = item.select_one("h3").get_text(strip=True) if item.select_one("h3") else "无标题"
-        link = "https://vitejs.dev" + item.select_one("a")["href"] if item.select_one("a") else "#"
-        desc = item.select_one("p").get_text(strip=True)[:150] + "..." if item.select_one("p") else "无简介"
-        news_list.append({"title": title, "link": link, "desc": desc})
-    return news_list
+        title = item.find("h3")
+        if not title: continue
+        link = item.find("a")
+        if not link: continue
+        news.append({
+            "title": title.get_text(strip=True),
+            "link": "https://vitejs.dev" + link.get("href"),
+            "desc": "来自 Vite 官方博客"
+        })
+    return news
 
 def parse_github_trending(soup):
-    news_list = []
-    if not soup:
-        return news_list
     items = soup.select(".Box-row")[:5]
+    news = []
     for item in items:
-        title = item.select_one("h3").get_text(strip=True).replace("\n", "").replace(" ", "") if item.select_one("h3") else "无标题"
-        link = "https://github.com" + item.select_one("a")["href"] if item.select_one("a") else "#"
-        stars = item.select_one(".octicon-star").next_sibling.get_text(strip=True) if item.select_one(".octicon-star") else "0"
-        desc = item.select_one("p").get_text(strip=True)[:150] + "..." if item.select_one("p") else "无简介"
-        news_list.append({"title": f"{title} ⭐{stars}", "link": link, "desc": desc})
-    return news_list
+        title = item.find("h3")
+        if not title: continue
+        link = title.find("a")
+        if not link: continue
+        stars = item.select_one(".octicon-star + span")
+        star_text = stars.get_text(strip=True) if stars else "0"
+        desc = item.find("p")
+        desc_text = desc.get_text(strip=True)[:120] + "..." if desc else "无描述"
+        news.append({
+            "title": f"{title.get_text(strip=True)} ⭐{star_text}",
+            "link": "https://github.com" + link.get("href"),
+            "desc": desc_text
+        })
+    return news
 
-def parse_juejin_news(soup):
-    news_list = []
-    if not soup:
-        return news_list
-    items = soup.select(".article-item")[:3]
+def parse_juejin_collect(soup):
+    items = soup.select(".article-item")[:4]
+    news = []
     for item in items:
-        title = item.select_one("h3").get_text(strip=True) if item.select_one("h3") else "无标题"
-        link = "https://juejin.cn" + item.select_one("a")["href"] if item.select_one("a") else "#"
-        desc = item.select_one(".abstract").get_text(strip=True)[:150] + "..." if item.select_one(".abstract") else "无简介"
-        news_list.append({"title": title, "link": link, "desc": desc})
-    return news_list
+        title = item.find("h3")
+        if not title: continue
+        link = item.find("a")
+        if not link: continue
+        abstract = item.find(class_="abstract")
+        desc = abstract.get_text(strip=True)[:120] if abstract else "无摘要"
+        news.append({
+            "title": title.get_text(strip=True),
+            "link": "https://juejin.cn" + link.get("href"),
+            "desc": desc
+        })
+    return news
 
-# -------------------------- 主逻辑：生成结构化内容 --------------------------
-def generate_md_content():
-    # 初始化分类
-    categories = {
+# ================= 主逻辑 =================
+def generate_md():
+    data = {
         "框架更新": [],
         "生态工具": [],
-        "开源项目": [],
-        "行业实践": []
+        "热门开源项目": [],
+        "行业实践与深度文章": []
     }
 
-    # 爬取所有源的资讯
-    for source_id, source_info in NEWS_SOURCES.items():
-        soup = get_soup(source_info["url"])
-        parser_func = globals()[source_info["parser"]]
-        news = parser_func(soup)
-        if news:
-            categories[source_info["category"]].extend(news)
+    # 1. Vue 官方博客 ----
+    s = get_soup("https://blog.vuejs.org/")
+    if s:
+        data["框架更新"].extend(parse_vue_blog(s))
 
-    # 构建Markdown内容
+    # 2. React 官方博客 ----
+    s = get_soup("https://react.dev/blog")
+    if s:
+        data["框架更新"].extend(parse_react_news(s))
+
+    # 3. Vite 官方博客 ----
+    s = get_soup("https://vitejs.dev/blog")
+    if s:
+        data["生态工具"].extend(parse_vite_news(s))
+
+    # 4. GitHub Trending ----
+    s = get_soup("https://github.com/trending/frontend?since=weekly")
+    if s:
+        data["热门开源项目"].extend(parse_github_trending(s))
+
+    # 5. 掘金前端精选 ----
+    s = get_soup("https://juejin.cn/column/6896228171065718797")
+    if s:
+        data["行业实践与深度文章"].extend(parse_juejin_collect(s))
+
+    # 过滤无内容情况
+    for k in data:
+        if not data[k]:
+            data[k] = [{"title": f"本周【{k}】暂无重大更新", "link": "#", "desc": "无"}]
+
+    # 生成 Markdown
     md = f"""# 📅 {week_num} 前端技术周刊 · {week_str}
 更新时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | 开源地址：[weekly-frontend-news](https://github.com/WednesdayCAT/weekly-frontend-news)
 
-> 每周一自动更新，精选前端领域「框架更新/生态工具/开源项目/行业实践」，帮你高效掌握前端趋势。
+> 🤖 每周一自动更新，基于 GitHub Actions 自动爬取与生成，精选前端框架、工具、开源项目与行业实践。
 
 ---
 
 ## 🚀 框架更新
 """
-    for item in categories["框架更新"]:
+    for item in data["框架更新"]:
         md += f"- **[{item['title']}]({item['link']})**\n  > {item['desc']}\n\n"
-    if not categories["框架更新"]:
-        md += "本周暂无重大框架更新\n\n---\n"
 
     md += "## 🛠️ 生态工具\n"
-    for item in categories["生态工具"]:
+    for item in data["生态工具"]:
         md += f"- **[{item['title']}]({item['link']})**\n  > {item['desc']}\n\n"
-    if not categories["生态工具"]:
-        md += "本周暂无重大工具更新\n\n---\n"
 
     md += "## 🌟 热门开源项目\n"
-    for item in categories["开源项目"]:
+    for item in data["热门开源项目"]:
         md += f"- **[{item['title']}]({item['link']})**\n  > {item['desc']}\n\n"
-    if not categories["开源项目"]:
-        md += "本周暂无热门开源项目\n\n---\n"
 
     md += "## 💡 行业实践与深度文章\n"
-    for item in categories["行业实践"]:
+    for item in data["行业实践与深度文章"]:
         md += f"- **[{item['title']}]({item['link']})**\n  > {item['desc']}\n\n"
-    if not categories["行业实践"]:
-        md += "本周暂无精选文章\n\n---\n"
 
-    # 引流与互动模块
-    md += """## 📢 关于本项目
-- 本仓库每周一 8:00 自动更新，所有资讯均来自官方/高价值社区，经过结构化整理；
-- 如果你觉得内容有帮助，欢迎给个 ⭐ Star 支持，你的鼓励是持续更新的动力；
-- 欢迎提交 Issue/PR 补充你发现的优质资讯，一起共建前端技术社区；
-- 关注我，获取更多前端自动化与工程化实践分享。
+    # 引流模块
+    md += f"""---
 
-> 「技术沉淀，开源共享」—— WednesdayCAT
+## 📢 欢迎关注 & Star
+本项目每周一 8:00 自动更新，持续沉淀前端前沿资讯。
+如果你觉得这份周刊有价值，欢迎 **Star 支持**，也欢迎提交 Issue/PR 补充你发现的优质内容，一起共建前端社区。
+
+仓库地址：
+👉 [https://github.com/WednesdayCAT/weekly-frontend-news](https://github.com/WednesdayCAT/weekly-frontend-news)
+
+---
+📝 由 WednesdayCAT 前端团队自动化生成
 """
     return md
 
-# -------------------------- 写入文件 --------------------------
+# ================= 写入文件 =================
 if __name__ == "__main__":
-    content = generate_md_content()
+    content = generate_md()
     with open(md_file_path, "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"✅ 资讯文件已生成：{md_file_path}")
+    print(f"✅ 生成成功：{md_file_path}")
