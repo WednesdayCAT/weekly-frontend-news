@@ -2,3 +2,4 @@ requests==2.31.0    # 爬取网页内容
 beautifulsoup4==4.12.3 # 解析HTML，提取核心内容
 python-dotenv==1.0.1 # 加载环境变量（可选）
 PyYAML==6.0.1        # 解析配置文件（可选）
+feedparser==6.0.10   # 解析RSS/Atom订阅源
