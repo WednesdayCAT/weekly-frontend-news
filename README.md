@@ -10,6 +10,7 @@
 
 1. 安装依赖：
 ```bash
+cd scripts
 pip install -r requirements.txt
 ```
 
@@ -28,14 +29,14 @@ python scripts/generate_news.py
 ## 目录结构
 
 ```
-weekly-front-end-news/
+weekly-frontend-news/
 ├── docs/                    # 资讯主目录（按「年-周」命名，方便检索）
 │   ├── 2026/
 │   │   ├── 2026-16周（0414-0420）.md
 │   │   ├── 2026-17周（0421-0427）.md
 │   │   └── README.md        # 年度资讯汇总，带超链接索引
 │   └── README.md            # 仓库首页，含简介、更新规则、目录索引
-── scripts/                 # 自动化脚本目录
+├── scripts/                 # 自动化脚本目录
 │   ├── generate_news.py     # 核心：资讯爬取+内容生成+MD格式化的脚本
 │   ├── config.py            # 配置文件：爬取源、内容模板、仓库信息
 │   └── requirements.txt     # 脚本依赖包
