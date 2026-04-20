@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://github.com/WednesdayCAT/weekly-frontend-news</id>
     <title>前端技术周刊</title>
-    <updated>2026-04-20T17:16:45.787Z</updated>
+    <updated>2026-04-20T17:17:32.061Z</updated>
     <generator>weekly-frontend-news</generator>
     <author>
         <name>WednesdayCAT</name>
@@ -15,8 +15,8 @@
     <rights>MIT © WednesdayCAT</rights>
     <entry>
         <title type="html"><![CDATA[2026年第16周]]></title>
-        <id>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\week-16.md</id>
-        <link href="https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\week-16.md"/>
+        <id>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026/week-16.md</id>
+        <link href="https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026/week-16.md"/>
         <updated>2026-04-20T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[第16周前端技术周刊]]></summary>
         <content type="html"><![CDATA[# 📅 2026-16周 前端技术周刊（04-12 至 04-18）

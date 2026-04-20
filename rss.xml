@@ -4,7 +4,7 @@
         <title>前端技术周刊</title>
         <link>https://github.com/WednesdayCAT/weekly-frontend-news</link>
         <description>每周一自动更新的前端技术周刊，帮你高效掌握前端趋势</description>
-        <lastBuildDate>Mon, 20 Apr 2026 17:16:45 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 20 Apr 2026 17:17:32 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>weekly-frontend-news</generator>
         <language>zh-CN</language>
@@ -12,8 +12,8 @@
         <atom:link href="https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[2026年第16周]]></title>
-            <link>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\week-16.md</link>
-            <guid>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026\week-16.md</guid>
+            <link>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026/week-16.md</link>
+            <guid>https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/2026/week-16.md</guid>
             <pubDate>Mon, 20 Apr 2026 00:00:00 GMT</pubDate>
             <description><![CDATA[第16周前端技术周刊]]></description>
             <content:encoded><![CDATA[# 📅 2026-16周 前端技术周刊（04-12 至 04-18）

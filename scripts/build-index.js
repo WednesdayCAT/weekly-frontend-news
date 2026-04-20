@@ -26,7 +26,7 @@ function buildIndex() {
       files.forEach(file => {
         const weekNum = file.match(/week-(\d+)\.md/);
         if (weekNum) {
-          const filePath = path.join(year, file);
+          const filePath = path.posix.join(year, file);
           const content = fs.readFileSync(path.join(yearDir, file), 'utf-8');
           
           // 提取标题
