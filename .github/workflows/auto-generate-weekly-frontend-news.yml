@@ -1,29 +1,27 @@
 name: Auto Generate Weekly Frontend News
 on:
   schedule:
-    - cron: '0 0 * * 1'  # 每周一 0点（北京时间8点）
+    - cron: '0 0 * * 1'
   workflow_dispatch:
 
 jobs:
   generate-and-push:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 关键：给Actions写权限
+      contents: write
     steps:
-      - name: Checkout Repository (with Write Permissions)
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # 关键修复：使用GitHub自带的Token授权，解决权限拒绝
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 解决 setup-python 告警与依赖问题
+      # 修复setup-python报错
       - name: Set Up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          # 关闭自动缓存逻辑，避免告警
-          cache: 'none'
+          # 去掉不支持的 cache: 'none'，改为不指定cache（默认false）
 
       - name: Install Dependencies
         run: |
