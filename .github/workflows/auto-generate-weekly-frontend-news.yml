@@ -11,17 +11,15 @@ jobs:
       contents: write
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5  # 升级到 v5，支持 Node.js 24
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 修复setup-python报错
       - name: Set Up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6  # 升级到 v6，支持 Node.js 24
         with:
           python-version: '3.11'
-          # 去掉不支持的 cache: 'none'，改为不指定cache（默认false）
 
       - name: Install Dependencies
         run: |
