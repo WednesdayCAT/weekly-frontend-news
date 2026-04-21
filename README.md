@@ -2,46 +2,35 @@
 
 > 每周一自动更新的前端技术周刊，帮你高效掌握前端趋势
 
-[![Update](https://github.com/WednesdayCAT/weekly-frontend-news/actions/workflows/weekly-publish.yml/badge.svg)](https://github.com/WednesdayCAT/weekly-frontend-news/actions)
+[![Auto Generate](https://github.com/WednesdayCAT/weekly-frontend-news/actions/workflows/auto-generate-weekly-frontend-news.yml/badge.svg)](https://github.com/WednesdayCAT/weekly-frontend-news/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
 ## ✨ 项目亮点
 
-- 🤖 **自动化生成**：GitHub Actions 定时跑，每周一 8:00 自动发布
-- 📚 **结构化存储**：按年/周归档，支持索引查询
-- 🔔 **多格式订阅**：RSS / JSON Feed / Atom 全支持
--  **共享访问**：GitHub Pages + 原始文件直链
-- 📊 **数据统计**：元数据管理，周刊统计一目了然
+- 🤖 **自动化生成**：GitHub Actions 定时运行，每周一 8:00 (UTC+8) 自动发布
+- 📚 **结构化存储**：按 `年/周` 归档，方便检索和回溯
+- 🔒 **内容精选**：基于 GitHub API、RSS 订阅源自动抓取，过滤低价值信息
+- 📦 **开源共享**：所有内容基于 MIT 协议开源，可自由复用
 
 ---
 
 ## 📅 最近更新
 
-| 期数 | 日期 | 重点内容 | 链接 |
-|------|------|----------|------|
-| 2026-17 | 04-27 | Vue3 组合式 API、Next.js SSR | [查看](archives/2026/week-17.md) |
-| 2026-16 | 04-20 | WebSkill 开源、Vue 组件指南 | [查看](archives/2026/week-16.md) |
+| 期数 | 日期 | 链接 |
+|------|------|------|
+| 2026-16周 | 04-14 ~ 04-20 | [查看](docs/2026/2026-16周%20前端技术周报.md) |
 
-📚 **[完整存档索引](archives/README.md)**
+📚 **存档目录**：[`docs/`](docs/)
 
 ---
 
-## 🚀 快速使用
+## 🚀 快速开始
 
-### 订阅周刊
+### 在线阅读
 
-| 方式 | 链接 |
-|------|------|
-| 📬 RSS | [rss.xml](rss.xml) |
-| 📄 JSON Feed | [feed.json](feed.json) |
-| ⚛️ Atom | [atom.xml](atom.xml) |
-
-**订阅地址**（复制到 RSS 阅读器）：
-```
-https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/rss.xml
-```
+直接访问仓库 [`docs/2026/`](docs/2026/) 目录查看最新周刊。
 
 ### 本地运行
 
@@ -50,14 +39,11 @@ https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/rss.xml
 git clone https://github.com/WednesdayCAT/weekly-frontend-news.git
 cd weekly-frontend-news
 
-# 安装依赖
-npm install
+# 安装 Python 依赖
+pip install -r requirements.txt
 
-# 生成周刊
-npm run generate
-
-# 构建索引和 RSS
-npm run index && npm run rss
+# 生成当周周刊
+python scripts/generate_weekly_news.py
 ```
 
 ---
@@ -66,75 +52,41 @@ npm run index && npm run rss
 
 ```
 weekly-frontend-news/
-├── archives/              # 周刊存档
-│   ├── index.json        # 索引文件
-│   ├── README.md         # 存档列表
-│   └── 2026/             # 按年份存储
-│       └── week-17.md
-├── scripts/               # 自动化脚本
-│   ├── generate-weekly.js
-│   ├── build-index.js
-│   └── build-rss.js
-├── template/              # 模板文件
-├── rss.xml               # RSS 订阅
-└── README.md
+├── .github/
+│   └── workflows/
+│       └── auto-generate-weekly-frontend-news.yml   # GitHub Actions 自动化工作流
+├── docs/                                              # 周刊文档存档
+│   └── 2026/
+│       └── 2026-16周 前端技术周报.md
+├── scripts/
+│   └── generate_weekly_news.py                        # 周刊生成脚本（Python）
+├── requirements.txt                                   # Python 依赖
+├── LICENSE                                            # MIT 开源协议
+└── README.md                                          # 项目说明
 ```
 
 ---
 
 ## 📌 内容模块
 
+每期周刊包含以下模块：
+
 | 模块 | 说明 |
 |------|------|
-| 🚀 框架更新 | Vue/React/Angular/Next.js 等官方动态 |
-| 🛠️ 生态工具 | Vite/Webpack/Tailwind 等工具更新 |
-| 🌟 开源项目 | GitHub 高星前端项目推荐 |
-| 🌐 Web 标准 | CSS/HTTP/浏览器新特性 |
-| 💡 行业实践 | 大厂落地案例、优化方案 |
+| 🚀 框架更新 | Vue / React / Angular 等主流框架官方动态 |
+| 🛠️ 生态工具 | Vite / Webpack / TypeScript 等工具链更新 |
+| 🌟 热门开源 | GitHub 高星前端项目推荐 |
+| 💡 行业实践 | 前端工程化、性能优化、大厂技术方案 |
 
 ---
 
-## 📤 共享方式
+## 🛠️ 技术栈
 
-### 1. 直接访问
-```
-https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/archives/2026/week-17.md
-```
-
-### 2. RSS 订阅
-```
-https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/rss.xml
-```
-
-### 3. API 访问
-```
-https://raw.githubusercontent.com/WednesdayCAT/weekly-frontend-news/main/archives/index.json
-```
-
-### 4. GitHub Pages
-启用后访问：`https://WednesdayCAT.github.io/weekly-frontend-news/`
-
-📖 **详细文档**：[docs/SHARING.md](docs/SHARING.md)
-
----
-
-## 📊 统计信息
-
-```bash
-# 查看周刊统计
-node scripts/metadata.js stats
-```
-
----
-
-## 🛠️ 开发命令
-
-| 命令 | 说明 |
-|------|------|
-| `npm run generate` | 生成当周周刊 |
-| `npm run index` | 构建周刊索引 |
-| `npm run rss` | 生成 RSS 订阅源 |
-| `npm run publish` | 完整发布流程 |
+- **Python 3.11** — 核心脚本语言
+- **requests** — HTTP 请求
+- **beautifulsoup4** — HTML/XML 解析
+- **feedparser** — RSS/Atom 订阅源解析
+- **GitHub Actions** — 自动化定时任务
 
 ---
 
@@ -146,14 +98,10 @@ node scripts/metadata.js stats
 
 ---
 
-##  License
+## 📄 License
 
 MIT © [WednesdayCAT](https://github.com/WednesdayCAT)
 
 ---
 
 > 技术沉淀，开源共享 — 每周一 8:00 准时更新
-
-📬 **订阅**：[RSS](rss.xml) | [JSON](feed.json) | [Atom](atom.xml)  
-📚 **存档**：[archives/README.md](archives/README.md)  
-📖 **文档**：[docs/SHARING.md](docs/SHARING.md)
